@@ -45,3 +45,35 @@ Function.prototype.contramap = function(fn) {
   return (...args) => this(fn(...args))
 }
 ```
+
+A monad instance would be more useful, I think.
+
+### Recursive `fold`
+
+Not optimal
+
+```js
+const fold = (foldingFn, acc) => ([x, ...xs]) =>
+  acc !== undefined
+    ? x === undefined
+      ? acc
+      : fold(foldingFn, foldingFn(acc, x))(xs)
+    : fold(foldingFn, x)(xs)
+
+const sum = fold((acc, x) => x + acc)
+const reverse = fold((acc, x) => [x].concat(acc))
+const any = predFn =>
+  fold((acc, x) => predFn(x) || acc, false)
+```
+
+### Array monad and applicative
+```js
+// concatMap :: (a -> [b]) -> [a] -> [b]
+const concatMap = f => ([x, ...xs], acc = []) =>
+  x === undefined
+    ? acc
+    : concatMap(f)(xs, [...acc, ...f(x)])
+
+// ap :: ([a -> b]) -> [a] -> [b]
+const ap = fs => xs => concatMap(f => xs.map(x => f(x)))(fs)
+```
