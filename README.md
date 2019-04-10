@@ -44,6 +44,11 @@ Function.prototype.map = function(fn) {
 Function.prototype.contramap = function(fn) {
   return (...args) => this(fn(...args))
 }
+
+// Applicative
+Function.prototype.ap = function(ra) {
+  return (...r) => this(...r)(ra(...r))
+}
 ```
 
 A monad instance would be more useful, I think.
