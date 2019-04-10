@@ -46,6 +46,7 @@ Function.prototype.contramap = function(fn) {
 }
 
 // Applicative
+// ap :: (r -> a -> b) ~> (r -> a) -> (r -> b)
 Function.prototype.ap = function(ra) {
   return (...r) => this(...r)(ra(...r))
 }
