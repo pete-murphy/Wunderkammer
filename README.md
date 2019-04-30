@@ -1,6 +1,6 @@
 # Wunderkammer
 
-Curios from foreign lands. Mostly me stealing from Haskell to bring to JavaScript, promethean-like.
+Mostly stealing from Haskell.
 
 ### Password generator?
 This one is based off a Mark Seeman blog post.
@@ -36,11 +36,13 @@ map(xs => xs.join(""))(
 
 ```js
 // Covariant
+// map :: (r -> a) ~> (a -> b) -> (r -> b)
 Function.prototype.map = function(fn) {
   return (...args) => fn(this(...args))
 }
 
 // Contravariant
+// contramap :: (r -> a) ~> (r -> s) -> (s -> a)
 Function.prototype.contramap = function(fn) {
   return (...args) => this(fn(...args))
 }
